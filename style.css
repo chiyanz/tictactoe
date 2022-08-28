@@ -9,7 +9,6 @@
   align-items: center;
   left: 25%;
   top: 8%;
-  display: none;
 }
 
 .block {
@@ -24,15 +23,23 @@
 }
 
 .start-screen {
-  z-index: 1;
+  z-index: 4;
   height: 100vh;
   width: 100%;
   background: #eee;
   text-align: center;
-  position: absolute;
+}
+
+.start-button {
+  background-color: #589544;
+  color: #ECEFEB;
 }
 
 body {
   margin: 0;
   background: #eee;
+}
+
+.end-screen {
+  display: none;
 }
