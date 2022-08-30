@@ -21,41 +21,59 @@ const gameBoard = (() => {
 })();
 
 
-const Player = () => {
-  let sign = 'X'
+const Player = (sign) => {
+  let s = sign
 
   const getSign = () => {
-    return sign;
+    return s
+  }
+
+  const switchSign = (newSign) => {
+    s = newSign
   }
   
-  return { getSign }
+  return { getSign, switchSign }
 }
 
 const Game = (() => {
   const field = document.querySelector('.game-board')
   const startScreen = document.querySelector('.start-screen')
   const startBtn = document.querySelector('.start-button')
+  const gameContainer = document.querySelector('.game-container')
+  const resetBtn = document.querySelector('.resetBtn')
 
-  
+  let user = Player('X')
+
   Array.from(field.children).forEach((block, i) => {
     block.addEventListener('click', () => {
-      block.innerHTML = Player.getSign()
-      gameBoard.updateBlock(i, Palyer.getSign())
+      block.innerHTML = user.getSign()
+      gameBoard.updateBlock(i, user.getSign())
+      if(user.getSign() === 'X') {
+        user.switchSign('O')
+      }
+      else {
+        user.switchSign('X')
+      }
+
+      checkWinningO()
+      checkWinningX()
     })
   })
 
   const startGame = () => {
     startScreen.style.display = 'none'
-    field.style.display = 'inline-grid'
+    gameContainer.style.display = 'flex'
   }
   
-  const endGame = () => {
-    const endScreen = document.querySelector('.end-game-screen')
+  const endGame = (winner) => {
+    const endScreen = document.querySelector('.end-screen')
     endScreen.style.display = 'block'
+    resetBtn.addEventListener('click', resetGame)
   }
 
   const resetGame = () => {
     startScreen.style.display = 'block'
+    gameContainer.style.display = 'none'
     gameBoard.reset()
   }
   
@@ -75,19 +93,23 @@ const Game = (() => {
   
 
   const checkWinningX = () => {
-    winScenarios.some((arr) => {
+    if(winScenarios.some((arr) => {
       return arr.every((i) => gameBoard.getBlock(i) === 'X')
-    })
+    })) {
+      endGame('X')
+    }
   }
 
   const checkWinningO = () => {
-    winScenarios.some((arr) => {
+    if(winScenarios.some((arr) => {
       return arr.every((i) => gameBoard.getBlock(i) === 'X')
-    })
+    })) {
+      endGame('O')
+    }
   }
 
 
-  startBtn.addEventListener('click', startGame())
+  startBtn.addEventListener('click', startGame)
 
 })();
 

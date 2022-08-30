@@ -9,6 +9,8 @@
   align-items: center;
   left: 25%;
   top: 8%;
+  display: none;
+  justify-content: center;
 }
 
 .block {
@@ -28,11 +30,15 @@
   width: 100%;
   background: #eee;
   text-align: center;
+  display: block;
 }
 
 .start-button {
+  font-size: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-color: #589544;
   color: #ECEFEB;
+  margin-top: 30%;
 }
 
 body {
