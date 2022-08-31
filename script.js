@@ -41,10 +41,12 @@ const Game = (() => {
   const startBtn = document.querySelector('.start-button')
   const gameContainer = document.querySelector('.game-container')
   const resetBtn = document.querySelector('.resetBtn')
+  const endScreen = document.querySelector('.end-screen')
+  const winnerEle = document.querySelector('.winner')
 
   let user = Player('X')
-
-  Array.from(field.children).forEach((block, i) => {
+  let squares = Array.from(field.children)
+  squares.forEach((block, i) => {
     block.addEventListener('click', () => {
       block.innerHTML = user.getSign()
       gameBoard.updateBlock(i, user.getSign())
@@ -66,14 +68,17 @@ const Game = (() => {
   }
   
   const endGame = (winner) => {
-    const endScreen = document.querySelector('.end-screen')
     endScreen.style.display = 'block'
+    winnerEle.innerHTML = winner
     resetBtn.addEventListener('click', resetGame)
   }
 
   const resetGame = () => {
     startScreen.style.display = 'block'
     gameContainer.style.display = 'none'
+    squares.forEach((ele) => ele.innerHTML = "")
+    winnerEle.innerHTML = ""
+    endScreen.style.display = 'none'
     gameBoard.reset()
   }
   
