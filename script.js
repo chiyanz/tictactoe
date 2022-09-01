@@ -59,6 +59,7 @@ const Game = (() => {
 
       checkWinningO()
       checkWinningX()
+      block.disabled = true
     })
   })
 
@@ -68,7 +69,7 @@ const Game = (() => {
   }
   
   const endGame = (winner) => {
-    endScreen.style.display = 'block'
+    endScreen.style.display = 'flex'
     winnerEle.innerHTML = winner
     resetBtn.addEventListener('click', resetGame)
   }
@@ -76,9 +77,13 @@ const Game = (() => {
   const resetGame = () => {
     startScreen.style.display = 'block'
     gameContainer.style.display = 'none'
-    squares.forEach((ele) => ele.innerHTML = "")
+    squares.forEach((block) => {
+      block.innerHTML = ""
+      block.disabled = false
+    })
     winnerEle.innerHTML = ""
     endScreen.style.display = 'none'
+    user.switchSign('X')
     gameBoard.reset()
   }
   
@@ -107,7 +112,7 @@ const Game = (() => {
 
   const checkWinningO = () => {
     if(winScenarios.some((arr) => {
-      return arr.every((i) => gameBoard.getBlock(i) === 'X')
+      return arr.every((i) => gameBoard.getBlock(i) === 'O')
     })) {
       endGame('O')
     }
