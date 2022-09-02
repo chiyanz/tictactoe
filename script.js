@@ -6,6 +6,10 @@ const gameBoard = (() => {
     board[index] = sign
   }
 
+  const getBoard = () => {
+    return board
+  }
+
   const getBlock = (index) => {
     if(index > board.length) return;
     return board[index]
@@ -17,7 +21,7 @@ const gameBoard = (() => {
     }
   }
 
-  return { updateBlock, getBlock, reset };
+  return { updateBlock, getBoard, getBlock, reset };
 })();
 
 
@@ -59,6 +63,7 @@ const Game = (() => {
 
       checkWinningO()
       checkWinningX()
+      checkTie()
       block.disabled = true
     })
   })
@@ -73,6 +78,7 @@ const Game = (() => {
     winnerEle.innerHTML = winner
     resetBtn.addEventListener('click', resetGame)
   }
+
 
   const resetGame = () => {
     startScreen.style.display = 'block'
@@ -118,6 +124,15 @@ const Game = (() => {
     }
   }
 
+  const checkTie = () => {
+    let board = gameBoard.getBoard()
+    if(board.every((ele) => {
+      return ele !== ""
+    })) {
+      endGame("It's a tie!")
+    }
+     
+  }
 
   startBtn.addEventListener('click', startGame)
 
